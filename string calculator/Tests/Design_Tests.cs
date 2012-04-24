@@ -55,6 +55,23 @@ namespace Tests.LeFebvre.Kata.StringCalculator
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        
+        [Datapoints]
+        public string[] parameters = new string[] { "", "1", "2", "1,2", "2,3" };
+        [Datapoints]
+        public int[] answers = new int[] { 0, 1, 2, 3, 5 };
+
+        [Theory]
+        public void Add_method_returns_sum_of_specified_numbers(string numbers, int answer)
+        {
+            // Arrange
+            var values = (string.IsNullOrEmpty(numbers)) ? new int[] { 0,0} : numbers.Split(new char[] { ',' }).Select<string, int>(number => int.Parse(number));
+            var expected = values.Sum();
+
+            // Act
+            var actual = new Calculator().Add(numbers);
+
+            // Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }
